@@ -1,0 +1,35 @@
+version: '3.0'
+
+services:
+  api:
+    build: ./api
+    ports: ['0.0.0.0:7500:7500']
+    networks: ['bot-network']
+    entrypoint: ['node', 'start.js']
+    environment:
+     - SWAGGER_BASE_PATH
+  articulate:
+    build: ./articulate
+    ports: ['0.0.0.0:3333:3333']
+    networks: ['bot-network']
+    environment:
+     - API_URL
+  rasa:
+    build: ./rasa
+    ports: ['0.0.0.0:5000:5000']
+    volumes: ["${MODEL_DIR:-./local-storage/rasa/nlu-model}:/app/projects", "${RASA_CONFIG:-./local-storage/rasa/rasa-config.yml}:/app/config.yml", "./local-storage/rasa/logs:/app/logs"]
+    networks: ['bot-network']
+    environment:
+      - RASA_LOG_LEVEL='DEBUG'
+  duckling:
+    build: ./duckling
+    ports: ['0.0.0.0:8000:8000']
+    networks: ['bot-network']
+  redis:
+    image: redis:alpine
+    ports: ['0.0.0.0:6379:6379']
+    networks: ['bot-network']
+    command: redis-server --appendonly yes
+    volumes: ["${REDIS_DATA:-./local-storage/redis-data}:/data"]
+
+networks: {bot-network: {}}

@@ -1,0 +1,358 @@
+{
+  "language": "en",
+  "timezone": "UTC",
+  "agentName": "71999911-cb70-442c-8864-bc1d4e6a306e",
+  "useWebhook": true,
+  "usePostFormat": false,
+  "description": "This is test agent",
+  "fallbackResponses": [
+    "Sorry, can you rephrase that?",
+    "I'm still learning to speak with humans, can you rephrase that?"
+  ],
+  "domainClassifierThreshold": 0.5,
+  "webhook": {
+    "webhookUrl": "http://localhost:3000/agent/{{agent.id}}",
+    "webhookVerb": "GET",
+    "webhookPayload": "",
+    "webhookPayloadType": "None"
+  },
+  "entities": [
+    {
+      "uiColor": "#e91e63",
+      "entityName": "Test Entity",
+      "type": "learned",
+      "regex": null,
+      "examples": [
+        {
+          "value": "car",
+          "synonyms": [
+            "car",
+            "vehicle",
+            "automobile"
+          ]
+        },
+        {
+          "value": "mobile",
+          "synonyms": [
+            "mobile",
+            "cellphone",
+            "cell",
+            "cell phone",
+            "iphone"
+          ]
+        },
+        {
+          "value": "laptop",
+          "synonyms": [
+            "laptop",
+            "computer",
+            "macbook"
+          ]
+        }
+      ]
+    },
+    {
+      "uiColor": "#e91e62",
+      "entityName": "Test Regex Entity",
+      "type": "regex",
+      "regex": null,
+      "examples": [
+        {
+          "value": "regex",
+          "synonyms": [
+            "regex",
+            "regex2",
+            "regex3"
+          ]
+        }
+      ]
+    }
+  ],
+  "domains": [
+    {
+      "enabled": true,
+      "domainName": "Test Domain",
+      "model": "Test Domain_a24ef9cb-88f6-3da5-a0df-bdec39bd3069",
+      "intentThreshold": 0.5,
+      "intents": [
+        {
+          "intentName": "Test Intent",
+          "useWebhook": true,
+          "usePostFormat": false,
+          "examples": [
+            {
+              "userSays": "Show me my phone location",
+              "entities": [
+                {
+                  "end": 16,
+                  "start": 11,
+                  "value": "phone",
+                  "entity": "Test Entity"
+                }
+              ]
+            },
+            {
+              "userSays": "I need to find my laptop",
+              "entities": [
+                {
+                  "end": 24,
+                  "value": "laptop",
+                  "start": 18,
+                  "entity": "Test Entity"
+                }
+              ]
+            },
+            {
+              "userSays": "I need to find my laptop please",
+              "entities": [
+                {
+                  "end": 24,
+                  "value": "laptop",
+                  "start": 18,
+                  "entity": "Test Entity"
+                }
+              ]
+            },
+            {
+              "userSays": "I specifically need to find my laptop please",
+              "entities": [
+                {
+                  "end": 24,
+                  "value": "laptop",
+                  "start": 18,
+                  "entity": "Test Entity"
+                }
+              ]
+            },
+            {
+              "userSays": "Have you seen my iphone?",
+              "entities": [
+                {
+                  "end": 23,
+                  "value": "iphone",
+                  "start": 17,
+                  "entity": "Test Entity"
+                }
+              ]
+            },
+            {
+              "userSays": "Where do I left my car?",
+              "entities": [
+                {
+                  "end": 22,
+                  "start": 19,
+                  "value": "car",
+                  "entity": "Test Entity"
+                }
+              ]
+            },
+            {
+              "userSays": "Where is my car?",
+              "entities": [
+                {
+                  "end": 15,
+                  "start": 12,
+                  "value": "car",
+                  "entity": "Test Entity"
+                }
+              ]
+            },
+            {
+              "userSays": "Locate my car",
+              "entities": [
+                {
+                  "end": 12,
+                  "start": 10,
+                  "value": "car",
+                  "entity": "Test Entity"
+                }
+              ]
+            }
+          ],
+          "scenario": {
+            "scenarioName": "Test Intent",
+            "slots": [
+              {
+                "entity": "Test Entity",
+                "isList": false,
+                "slotName": "searchedObject",
+                "isRequired": true,
+                "textPrompts": [
+                  "What are you looking for?"
+                ]
+              }
+            ],
+            "intentResponses": [
+              "Your {{slots.searchedObject.original}} is located at..."
+            ]
+          },
+          "webhook": {
+            "webhookUrl": "http://localhost:7500/agent/{{agent.id}}",
+            "webhookVerb": "GET",
+            "webhookPayload": "",
+            "webhookPayloadType": "None"
+          }
+        },
+        {
+          "intentName": "Simple Test Intent",
+          "useWebhook": true,
+          "usePostFormat": false,
+          "examples": [
+            {
+              "userSays": "What can you find?",
+              "entities": []
+            },
+            {
+              "userSays": "What do you do?",
+              "entities": []
+            },
+            {
+              "userSays": "What can you do?",
+              "entities": []
+            },
+            {
+              "userSays": "What could you do for me?",
+              "entities": []
+            },
+            {
+              "userSays": "How you work?",
+              "entities": []
+            }
+          ]
+        },
+        {
+          "intentName": "Test Regex Intent",
+          "useWebhook": false,
+          "usePostFormat": false,
+          "examples": [
+            {
+              "userSays": "Here's my regex",
+              "entities": []
+            },
+            {
+              "userSays": "Here's my regex2",
+              "entities": []
+            },
+            {
+              "userSays": "Do you need my regex3?",
+              "entities": []
+            },
+            {
+              "userSays": "This is my regex",
+              "entities": []
+            }
+          ],
+          "scenario": {
+            "scenarioName": "Test Regex Intent",
+            "slots": [
+              {
+                "entity": "Test Regex Entity",
+                "isList": false,
+                "slotName": "searchedRegex",
+                "isRequired": true,
+                "textPrompts": [
+                  "What are you looking for?"
+                ]
+              }
+            ],
+            "intentResponses": [
+              "Your regex is {{slots.searchedRegex.value}}."
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "domainClassifierPipeline": [
+      {
+        "name": "nlp_spacy"
+      },
+      {
+        "name": "tokenizer_spacy"
+      },
+      {
+        "name": "intent_featurizer_spacy"
+      },
+      {
+        "name": "intent_classifier_sklearn"
+      }
+    ],
+    "intentClassifierPipeline": [
+      {
+        "name": "nlp_spacy"
+      },
+      {
+        "name": "tokenizer_spacy"
+      },
+      {
+        "name": "intent_featurizer_spacy"
+      },
+      {
+        "name": "ner_crf"
+      },
+      {
+        "name": "ner_synonyms"
+      },
+      {
+        "name": "intent_classifier_sklearn"
+      },
+      {
+        "name": "ner_spacy"
+      }
+    ],
+    "entityClassifierPipeline": [
+      {
+        "name": "nlp_spacy"
+      },
+      {
+        "name": "tokenizer_spacy"
+      },
+      {
+        "name": "ner_crf"
+      },
+      {
+        "name": "ner_synonyms"
+      },
+      {
+        "name": "ner_spacy"
+      }
+    ],
+    "rasaURL": "http://localhost:5000",
+    "ducklingURL": "http://localhost:8000",
+    "ducklingDimension": [
+      "amount-of-money",
+      "distance",
+      "duration",
+      "email",
+      "number",
+      "ordinal",
+      "phone-number",
+      "quantity",
+      "temperature",
+      "time",
+      "url",
+      "volume"
+    ],
+    "spacyPretrainedEntities": [
+      "PERSON",
+      "NORP",
+      "FAC",
+      "ORG",
+      "GPE",
+      "LOC",
+      "PRODUCT",
+      "EVENT",
+      "WORK_OF_ART",
+      "LAW",
+      "LANGUAGE",
+      "DATE",
+      "TIME",
+      "PERCENT",
+      "MONEY",
+      "QUANTITY",
+      "ORDINAL",
+      "CARDINAL"
+    ]
+  }
+}
